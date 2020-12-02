@@ -1,5 +1,6 @@
 \documentclass[12pt]{article}
-\usepackage{amsmath}
+\usepackage{amsmath, amssymb}
+\usepackage{bbold}
 \usepackage{graphicx}
 \graphicspath{{images/}}
 \usepackage[top = 2.5cm, bottom = 2.5cm, left = 2.5cm, right = 2.5cm]{geometry}
@@ -14,20 +15,20 @@
 	This assumptions correspond to the following model
 	\begin{equation}\label{hybrid}
 		\begin{aligned}
-		\frac{dN_i}{dt} &= g_iN_i\left(\sum_j(1-l_j)c_{ij}R_j - m_i\right)\\
-		\frac{dR_{j}}{dt} &= \kappa_j - \tau^{-1}_jR_j - \sum_iN_ic_{ij}R_j + \sum_{ik}N_iD_{kj}l_kc_{ik}R_k
+		\frac{dn_i}{dt} &= g_in_i\left(\sum_j(1-l_j)c_{ij}R_j - m_i\right)\\
+		\frac{dR_{j}}{dt} &= \kappa_j - \tau^{-1}_jR_j - \sum_in_ic_{ij}R_j + \sum_{ik}n_iD_{kj}l_kc_{ik}R_k
 		\end{aligned}
 	\end{equation}
-	where $ N_i $ is the population of species $ i $ and $ g_i $ is a proportionality constant relating energy to abundance of strain $ i $. The growth of species $ i $ is determined by the resources it harvests, which in turn depends on the resource concentration $ R_j $, and whether or not the species $ i $ consumes resournce $ j $ ($ c_{ij} = 1 \text{ or } c_{ij} = 0 $ respectively). However, not all the harvested resources contribute to growth. A fraction of them, $  l_j $, leak back to the environment as metabolic by-products. Additionally, species $ i $ invests some of the harvest in its living maintenance cost $ m_i $. The remaining resources after subtracting secretions and maintenance are transformed into biomass. \par 
+	where $ n_i $ is the population of species $ i $ and $ g_i $ is a proportionality constant relating energy to abundance of strain $ i $. The growth of species $ i $ is determined by the resources it harvests, which in turn depends on the resource concentration $ R_j $, and whether or not the species $ i $ consumes resournce $ j $ ($ c_{ij} = 1 \text{ or } c_{ij} = 0 $ respectively). However, not all the harvested resources contribute to growth. A fraction of them, $  l_j $, leak back to the environment as metabolic by-products. Additionally, species $ i $ invests some of the harvest in its living maintenance cost $ m_i $. The remaining resources after subtracting secretions and maintenance are transformed into biomass. \par 
 	$ R_j $ is the concentration of resource $ j $. $ \kappa_j $ and $ \tau_j^{-1} $ encode the external dynamics of the resources; they are the supply and dilution rate of resource  $ j $, respectively. $ l_k $ is the leakage fraction ($ 0 < l_k < 1 $), and $ D_{jk} $ represents the metabolic matrix, ie, the fraction of resource $ j $ that is transformed into resource $ k $. Note that the rows of $ D $ sum to 1.  \par
 	This model can be conveniently expressed in matrix form  as follows
 	\begin{equation}
 		\begin{aligned}
-		\frac{dN}{dt} &= g\circ N\left(D(R)C(1-l) - m\right)\\
-		\frac{dR}{dt} &= \kappa - D(R)\tau^{\circ -1}- D(R)C^TN + D^TD(l\circ R)C^TN
+		\frac{d\boldsymbol{n}}{dt} &= \boldsymbol{g}\circ \boldsymbol{n}\left(D(\boldsymbol{R})C(\boldsymbol{1}-\boldsymbol{l}) - \boldsymbol{m}\right)\\
+		\frac{d\boldsymbol{R}}{dt} &= \kappa - D(\boldsymbol{R})\boldsymbol{\tau}^{\circ -1}- D(\boldsymbol{R})C^T\boldsymbol{n} + D^TD(\boldsymbol{l}\circ \boldsymbol{R})C^T\boldsymbol{n}
 		\end{aligned}
 	\end{equation}
-	where $ \circ $ denotes element-wise  operation\par
+	where bold symbols are vectors and $ \circ $ denotes element-wise  operation\par
 	If I further assume (5) that the dilution all resources is slow, that is, $ \tau_j^{-1} << 1$ then the resource dynamics can be assumed to be at steady state, and a time scale separation between resource and population dynamics is possible. Thus, $ dR/dt \approx 0 $.\par
 	If I make one last assumption (6) that there is no leakage, that is, $ l_j $ = 0, \cite{Tikhonov2016} model is recovered:
 	\begin{equation}\label{Tikhonov_model}
@@ -134,7 +135,28 @@
 	\begin{equation}
 	    \Theta = \langle C_{ii'} \rangle - \langle F_{ii'} \rangle
 	\end{equation}
-
+    \section{Coalescence event of two communities}
+    Such event is simulated by mixing the species from each community after the assembly process in isolation has been completed. This can be mathematically expressed through a system of $ s_1 + s_2 + m $ differential equations, where $ s_1 $ and $ s_2 $ are the number of species that remain in the first and second communities after their assembly, respectively. 
+    In matrix form, the system of two coalescing communities can be expressed as
+    \begin{equation}\label{extended_system}
+		\begin{aligned}
+		\frac{d\boldsymbol{n}_e}{dt} &= \boldsymbol{g}\circ \boldsymbol{n}_{e}\left(D(\boldsymbol{R})C_{e}(\boldsymbol{1}-\boldsymbol{l}_e) - \boldsymbol{m}_e\right)\\
+		\frac{d\boldsymbol{R}}{dt} &= \boldsymbol{\kappa} - D(\boldsymbol{R})\boldsymbol{\tau}^{\circ -1}- D(\boldsymbol{R})C_e^T\boldsymbol{n_e} + \left[\mathbb{1} \ \mathbb{1}\right] D_e^TD(\boldsymbol{l_e}\circ \boldsymbol{R_e})C_e^T\boldsymbol{n}_e
+		\end{aligned}
+	\end{equation}
+	Where $ \left[\mathbb{1} \ \mathbb{1}\right] $ represents the horizontal concatenation of two $m \times m$ identity matrices. The sub-index $e$ stands for \textit{extended}. To form any of the extended vectors in equation \ref{extended_system}, one simply vertically concatenates the vectors from community 1 and community 2. Constructing an extended matrix in equation \ref{extended_system} is done by joining the two matrices alongside their diagonal. For example, constructing the vector of species abundances $\boldsymbol{n}_e$ and the metabolic matrix $D_e$ would be done as
+	\begin{equation}
+	    \boldsymbol{n}_e = \begin{bmatrix}
+                                \boldsymbol{n}^{(1)} \\
+                                \boldsymbol{n}^{(2)} \\
+                            \end{bmatrix} 
+        \qquad \qquad \qquad 
+        D_e = \begin{bmatrix}
+                    D^{(1)} & 0 \\
+                    0 & D^{(2)} \\ 
+              \end{bmatrix}
+	\end{equation}
+	where the superscripts indicate belonging to community 1 or 2
 	\newpage
 	\bibliographystyle{agsm}
 	\bibliography{library}
