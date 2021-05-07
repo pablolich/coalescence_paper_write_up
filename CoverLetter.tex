@@ -1,0 +1,136 @@
+% This LaTeX file uses the class impletter.cls to format
+% the new Imperial College letter to be printed on blank paper.
+% LdC Foulkes Jan. 2003.
+
+\documentclass[blank]{impletter}
+\usepackage{graphicx}
+\usepackage{microtype} % Improves typography
+
+\usepackage[sort&compress]{natbib}
+
+\let\OLDthebibliography\thebibliography
+\renewcommand\thebibliography[1]{
+  \OLDthebibliography{#1}
+  \setlength{\parskip}{0pt}
+  \setlength{\itemsep}{0pt plus 0.3ex}
+}
+\renewcommand*{\bibfont}{\footnotesize}
+% \renewcommand*{\bibsection}{}
+
+%%%%%%%%%%%%%%%% Adjustment Parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The letter has to have have the following (measured from the top):
+%	The bottom of the word 'Imperial' in the logo at 15mm
+%	The bottom of the date at 51mm
+%	The bottom of the 1st address line at 63mm
+%	The bottom of the salutation at 105mm
+%	The bottom of the department line (top right) at 12mm
+%	The bottom of the statutory footer 5.5mm from the bottom
+% 	The bottom of the first line of text on the second page at 51mm
+%	The margin at the left of the text should be 25mm
+%	The sender's detail (top right block) should be 90mm from the
+%	right edge.
+
+% The following are adjustable parameters to account for printer
+% differences. The values can be given in mm or pt
+% (a point is about .35 of a mm).
+
+% To move the printed page up (minus value) or down (plus value):
+\addtolength{\topmargin}{0mm}
+
+% To move the printed text to the right (plus) or left (minus).
+\addtolength{\evensidemargin}{0pt}
+\addtolength{\oddsidemargin}{0pt}
+% To move the statutory footer up (minus) or down (plus) - useful
+% if the printer will not print so close to the bottom of the page
+\addtolength{\footskip}{0mm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\headers{
+% Replace with the addressee details but DO NOT remove the \\ even if empty
+The Editor\\
+\textit{PLOS Computational Biology}\\
+}
+% Replace with the salutation for this letter
+{
+Dear Editor,
+}
+% Replace with your department, address, telephone, fax and e-mail.
+% Do not remove the blank lines.
+{Department of Life Sciences\\
+Imperial College London (Silwood Park Campus)\\
+Buckhurst Road, Ascot\\
+Berkshire SL5 7PY, UK\\
+Telephone +44 (0)20 7594 2213\\
+s.pawar@imperial.ac.uk\\
+www.imperial.ac.uk/people/s.pawar\\
+}
+% Replace with your name
+{
+Dr. Samraat Pawar
+}
+%% Replace with your qualifications
+% {
+% BA, MS, PhD, CPhys, MinstP\\
+% }
+% Replace with your job title. A second line can be added if necessary.
+{
+Reader\\
+% Grand Challenges in Ecosystems and the Environment Initiative
+% Director, Masters in Computational Methods in Ecology \& Evolution\\
+}
+\informal
+
+% Address the following questions
+% \begin{itemize}
+%     \item Why is this manuscript suitable for publication in PLOS Computational Biology?
+%     \item Why will your study inspire the other members of your field, and how will it drive research forward?
+% \end{itemize}
+
+% The text of the letter starts here
+
+We are submitting a manuscript titled {\it The role of competition vs cooperation in microbial community coalescence}, for consideration an article in {\it PLOS Computational Biology}. 
+
+Microbial communities are widespread throughout our planet \cite{Fierer2006}, from the the human gut to the deep ocean, and play a critical role in natural processes ranging from animal development and host health \cite{Huttenhower2012, McFall-Ngai2013} to biogeochemical cycles \cite{Falkowski2008}. These communities are very complex, typically harbouring hundreds of species \cite{Gilbert2014}, making them hard to characterize. Recently, DNA sequencing has allowed a high-resolution mapping of these communities, opening a niche for theoreticians and experimentalists to collaboratively decipher their complexity and assembly \cite{Costello2012,Friedman2017,Goldford2018,Goyal2018,Marsland2019,Vila2019,Estrela2020,Coyte2021,Fant2021}.
+
+Unlike in the macroscopic world, entire, distinct microbial communities are often displaced over space and come into contact with each other due to physical (e.g., dispersal by wind or water) and biological (e.g., animal-animal interactions or leaves falling to the ground) factors \cite{Kort2014, Evans2020,Luo2020, Vass2021}. The process by which two or more communities that were previously separated join and reassemble into a new community has been termed community coalescence \cite{Rillig2015}. Despite the frequency of microbial community coalescence, the outcome of such events in terms of community structure and function remains poorly understood \cite{Rillig2016b}.
+
+Here, we focus on the gap in our understanding of the relative importance of competition and cooperation in community coalescence, which is is largely missing. We use a consumer resource model that includes cross-feeding to assemble complex, cohesive microbial communities spanning a broad range in the competition-cooperation spectrum. Using a novel metric, we then quantify community-level competition and cooperation in the assembled communities, as well as their ``cohesiveness''. Using this metric, we then determine the relative importance of the two types of interactions on success in pairwise coalescence events.
+
+Encounters between microbial communities  are becoming increasingly frequent \cite{Seebens2017}, and mixing of whole microbial communities is gaining popularity for bio-engineering \cite{Rillig2016}, soil restoration \cite{Calderon2017}, faecal microbiota transplantation \cite{Wang2019, Wilson2019}, and the use of probiotics \cite{Lindemann2016}. We present a framework which relates the nature of species interaction in microbial communities to the outcome of community coalescence events. Although more work is required to bridge the gap between theory and empirical observations, this study constitutes a key step in that direction, and is likely to attract interest from a broad audience. 
+
+We suggest the following potential reviewers and editors for our manuscript
+:
+
+
+Dr. Mikhail Tikhonov (University of Washingotn St. Louis) tikhonov@wustl.edu\\
+Dr. Matthias Rillig (Freie Universität Berlin) rillig@zedat.fu-berlin.de\\
+Dr. Angus Buckling (University of Exeter) A.J.Buckling@exeter.ac.uk\\
+Dr. Jacopo Grilli (The Abdus Salam International Centre for Theoretical Physics) jgrilli@ictp.it (PLOS Associate Editor)\\
+Dr. Kiran Patil (University of Cambridtge)   kp533@mrc-tox.cam.ac.uk (PLOS Associate Editor)\\
+Dr. Sergei Maslov (University of Illinois at Urbana-Champaign) maslov@illinois.edu (PLOS Associate Editor)\\
+
+We confirm that this manuscript is not under consideration for publication in any other journal and we declare no conflicts of interest. 
+
+% Leave the name field blank if you don't want your name to be
+% printed at the bottom, but do not remove the {}.
+\close{
+Yours sincerely,
+}
+{
+% \includegraphics[width=0.3\linewidth]{graphics/samsig.pdf}\\
+\vspace{-40pt}
+
+Samr\={a}t Pawar\\
+Pablo A. Lech\'{o}n\\
+Tom Clegg \\
+Jacob Cook \\
+Thomas P. Smith
+}
+
+{\footnotesize
+\bibliography{references.bib}
+\bibliographystyle{plos2015}}
+
+\end{document}
